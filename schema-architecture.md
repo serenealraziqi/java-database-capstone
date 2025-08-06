@@ -2,48 +2,53 @@
 
 ## Section 1: Architecture Summary
 
-The Smart Clinic Management System follows a three-tier architecture consisting of Presentation, Application, and Data layers. The system supports both HTML-based dashboards (for Admins and Doctors) and RESTful APIs (for external or dynamic frontend integration). The backend is built using Java with Spring Boot, leveraging MVC architecture for rendering Thymeleaf views and REST controllers for API communication. Data persistence is handled via dual databases: MySQL is used for structured relational data such as doctors, patients, and appointments, while MongoDB is used to store unstructured and flexible data such as medical prescriptions. The system ensures modularity, scalability, and maintainability by separating concerns across layers and using standard Spring technologies and JPA/Mongo integrations.
+The Smart Clinic Management System follows a three-tier architecture that separates the system into three core layers: Presentation, Application, and Data. This design improves modularity, maintainability, and scalability. The application is developed using Spring Boot, combining both Spring MVC and REST APIs for handling user interactions.
+
+Thymeleaf is used to serve server-rendered views for Admin and Doctor dashboards, while REST APIs serve dynamic and external client modules such as Patient Dashboards and Appointments. The backend uses a shared Service Layer to apply business logic, regardless of whether the request comes from a controller serving a Thymeleaf view or a REST endpoint.
+
+For persistence, the application integrates two databases:
+- **MySQL** is used via Spring Data JPA for structured, relational data such as users, doctors, appointments, and admin records.
+- **MongoDB** is accessed via Spring Data MongoDB for storing flexible, document-based data like medical prescriptions.
+
+This tech stack enables the application to support both traditional web and API-based access while maintaining a clean separation of concerns and adhering to Spring Boot best practices. The system is also designed for containerization with Docker and supports CI/CD via GitHub Actions.
 
 ---
 
-## Section 2: Request-Response Flow (Numbered)
+## Section 2: Numbered Flow – Data and Control Flow
 
-1. **User Request Initiation**  
-   A user (Admin/Doctor/Patient) sends a request via a web browser (HTML frontend) or API client (Postman or frontend JS app).
+1. **User Access**
+   - Users (Admin, Doctor, Patient) access the system via web browsers (Thymeleaf dashboards) or external clients (REST API consumers like mobile apps or JS frontends).
 
-2. **Frontend Routing**  
-   - For HTML-based interfaces: Thymeleaf templates are rendered via Spring MVC Controllers.
-   - For API-based access: REST Controllers handle incoming JSON requests.
+2. **Controller Layer**
+   - Requests are routed to either:
+     - Spring MVC Controllers for rendering HTML pages via Thymeleaf.
+     - REST Controllers for handling JSON-based API calls.
 
-3. **Authentication & Authorization**  
-   JWT-based token authentication is verified using Spring Security filters to validate access and determine roles (Admin, Doctor, Patient).
+3. **Authentication and Authorization**
+   - Incoming requests are validated using JWT tokens via Spring Security.
+   - Roles (Admin, Doctor, Patient) are used to enforce access control.
 
-4. **Controller Layer**  
-   The request is handled by either:
-   - A `@Controller` (MVC) returning a Thymeleaf view, or
-   - A `@RestController` returning JSON data.
+4. **Service Layer**
+   - Controllers delegate all core logic to service classes.
+   - Business rules are applied here (e.g., checking appointment availability, validating patient IDs).
 
-5. **Service Layer**  
-   Controllers delegate logic to services which contain the business logic, validation, and interaction with repositories.
+5. **Repository Layer**
+   - The service layer interacts with the appropriate repository:
+     - JPA Repositories for MySQL entities like patients, appointments, doctors, and admins.
+     - Mongo Repositories for prescriptions stored as documents.
 
-6. **Repository Layer**  
-   Services call JPA Repositories (for MySQL) or Mongo Repositories (for MongoDB) to perform CRUD operations.
+6. **Database Interaction**
+   - Repositories query or persist data:
+     - MySQL handles normalized relational data with defined schemas and relationships.
+     - MongoDB manages flexible and schema-less prescription data.
 
-7. **Data Access Layer**  
-   - MySQL handles relational data (e.g., appointments, users, patient details).
-   - MongoDB stores dynamic or document-based data like prescriptions.
+7. **Response Handling**
+   - Retrieved data is returned to the controller.
+   - Controllers send the response back to the client:
+     - Thymeleaf templates for server-rendered views.
+     - JSON objects for REST API consumers.
 
-8. **Database Response**  
-   Data is fetched, processed, or updated in the relevant database, and results are returned to the service layer.
-
-9. **Response Construction**  
-   The service formats and returns the response:
-   - For HTML users: Thymeleaf views with embedded data.
-   - For APIs: JSON responses via REST Controller.
-
-10. **Client-Side Rendering**  
-   The client (browser or frontend app) receives the response and updates the UI or notifies the user accordingly.
-
+---
 
 
 ## 📊 Architecture Flow Diagram
