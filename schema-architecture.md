@@ -1,35 +1,53 @@
+# Smart Clinic Management System – Architecture Design
+
 ## Section 1: Architecture Summary
 
-This Spring Boot application utilizes a hybrid architecture combining both MVC and REST paradigms. For the administrative and doctor-facing dashboards, the application employs **Thymeleaf templates** that render server-side HTML views, facilitating rich user interfaces for logged-in users like admins and doctors. 
+The Smart Clinic Management System follows a three-tier architecture consisting of Presentation, Application, and Data layers. The system supports both HTML-based dashboards (for Admins and Doctors) and RESTful APIs (for external or dynamic frontend integration). The backend is built using Java with Spring Boot, leveraging MVC architecture for rendering Thymeleaf views and REST controllers for API communication. Data persistence is handled via dual databases: MySQL is used for structured relational data such as doctors, patients, and appointments, while MongoDB is used to store unstructured and flexible data such as medical prescriptions. The system ensures modularity, scalability, and maintainability by separating concerns across layers and using standard Spring technologies and JPA/Mongo integrations.
 
-For patient-related modules such as appointment management, patient records, and dashboards, the backend exposes **RESTful APIs**, allowing scalable, stateless client-server interactions supporting mobile apps or other frontend technologies.
+---
 
-The application integrates with two databases to optimize data storage according to data types and access patterns:
+## Section 2: Request-Response Flow (Numbered)
 
-- **MySQL**, accessed via Spring Data JPA, stores structured and relational data entities such as patients, doctors, appointments, and admin users. The database schema enforces data integrity with normalized tables.
-- **MongoDB**, accessed via Spring Data MongoDB, stores flexible, document-oriented prescription records, accommodating variable data schemas and rapid iteration.
+1. **User Request Initiation**  
+   A user (Admin/Doctor/Patient) sends a request via a web browser (HTML frontend) or API client (Postman or frontend JS app).
 
-The system is layered as follows: all incoming requests (either Thymeleaf controllers or REST controllers) flow into a shared **service layer** which encapsulates business logic, validation, and orchestration. The service layer accesses repositories corresponding to either MySQL or MongoDB data stores, abstracting data access and persistence. This separation enhances maintainability, scalability, and testability of the application.
+2. **Frontend Routing**  
+   - For HTML-based interfaces: Thymeleaf templates are rendered via Spring MVC Controllers.
+   - For API-based access: REST Controllers handle incoming JSON requests.
 
-## Section 2: Numbered Flow of Data and Control
+3. **Authentication & Authorization**  
+   JWT-based token authentication is verified using Spring Security filters to validate access and determine roles (Admin, Doctor, Patient).
 
-1. **User Interface Layer**:  
-   Users interact through either server-rendered Thymeleaf web dashboards (AdminDashboard and DoctorDashboard) or through REST clients such as mobile apps or modern single-page applications that consume JSON APIs.
+4. **Controller Layer**  
+   The request is handled by either:
+   - A `@Controller` (MVC) returning a Thymeleaf view, or
+   - A `@RestController` returning JSON data.
 
-2. **Controller Layer**:  
-   The application routes incoming HTTP requests based on URL and HTTP method to either Thymeleaf controllers (rendering HTML views) or REST controllers (processing API requests and returning JSON responses).
+5. **Service Layer**  
+   Controllers delegate logic to services which contain the business logic, validation, and interaction with repositories.
 
-3. **Service Layer**:  
-   Controllers delegate business logic execution and workflow coordination to the service layer. This includes data validation, enforcement of business rules, and transaction management such as verifying doctor availability before booking appointments.
+6. **Repository Layer**  
+   Services call JPA Repositories (for MySQL) or Mongo Repositories (for MongoDB) to perform CRUD operations.
 
-4. **Repository Layer**:  
-   The service layer accesses data repositories which abstract database operations. Spring Data JPA repositories interface with MySQL for relational data, while Spring Data MongoDB repositories handle unstructured prescription documents.
+7. **Data Access Layer**  
+   - MySQL handles relational data (e.g., appointments, users, patient details).
+   - MongoDB stores dynamic or document-based data like prescriptions.
 
-5. **Database Access**:  
-   Repositories execute queries and commands against their respective databases—MySQL providing structured, relational persistence with ACID compliance, and MongoDB offering flexible document-oriented storage enabling rapid schema changes.
+8. **Database Response**  
+   Data is fetched, processed, or updated in the relevant database, and results are returned to the service layer.
 
-6. **Model Binding**:  
-   Data retrieved from the databases is automatically mapped into Java model classes—JPA entities for MySQL tables and document models for MongoDB collections—enabling the application to manipulate data as strongly-typed objects.
+9. **Response Construction**  
+   The service formats and returns the response:
+   - For HTML users: Thymeleaf views with embedded data.
+   - For APIs: JSON responses via REST Controller.
 
-7. **Response Generation**:  
-   For MVC flows, model data is embedded into Thymeleaf templates and returned as fully rendered HTML pages to users’ browsers. For REST flows, models (or DTOs) are serialized to JSON and delivered to client applications. This completes the end-to-end request and response cycle.
+10. **Client-Side Rendering**  
+   The client (browser or frontend app) receives the response and updates the UI or notifies the user accordingly.
+
+
+
+
+
+
+Added architecture design for Smart Clinic app
+
