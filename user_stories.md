@@ -1,85 +1,52 @@
-# User Stories
+# Smart Clinic Management System – User Stories
 
-## Admin User Stories
+This document contains the user stories for the Smart Clinic Management System, categorized by user roles: Admin, Doctor, and Patient. These stories follow the standard agile format and will guide the development of system functionality.
 
-**Title:**  
-_As an Admin, I want to create, edit, and deactivate user accounts, so that I can manage system access securely._  
-**Acceptance Criteria:**  
-1. Admin can add new users with appropriate roles.  
-2. Admin can modify user details, including roles and status.  
-3. Admin can deactivate users to restrict system access.  
-**Priority:** High  
-**Story Points:** 5  
-**Notes:**  
-- Ensure that user actions are logged for audit purposes.  
+---
 
-**Title:**  
-_As an Admin, I want to assign roles to users (Doctor, Patient), so that permissions and access are properly managed._  
-**Acceptance Criteria:**  
-1. Admin can assign one or multiple roles during user creation.  
-2. Role changes can be modified later by Admin.  
-3. System enforces role-based access control based on assigned roles.  
-**Priority:** High  
-**Story Points:** 3  
-**Notes:**  
-- Ensure role changes trigger permission refresh across modules.
+## 👩‍💼 Admin User Stories
 
-## Doctor User Stories
+1. **As an Admin, I want to create and manage doctor accounts so that I can control access to the system.**
 
-**Title:**  
-_As a Doctor, I want to view my upcoming appointments, so that I can prepare for patient consultations._  
-**Acceptance Criteria:**  
-1. Doctor sees list of upcoming appointments sorted by date and time.  
-2. Appointment details include patient info and reason for visit.  
-3. Doctor can filter or search appointments by date.  
-**Priority:** High  
-**Story Points:** 5  
-**Notes:**  
-- Notifications for new or changed appointments may be included later.
+2. **As an Admin, I want to view a list of all registered patients and doctors so that I can monitor clinic operations.**
 
-**Title:**  
-_As a Doctor, I want to manage my availability calendar, so that patients can book only during my free times._  
-**Acceptance Criteria:**  
-1. Doctor can mark time slots as available or unavailable.  
-2. Calendar changes immediately affect booking availability.  
-3. Doctor can view booked vs free slots.  
-**Priority:** Medium  
-**Story Points:** 8  
-**Notes:**  
-- Integrate with patient booking system for real-time updates.
+3. **As an Admin, I want to assign roles (Doctor, Patient) to new users so that the system enforces access control.**
 
-## Patient User Stories
+4. **As an Admin, I want to deactivate or delete user accounts so that I can maintain system security.**
 
-**Title:**  
-_As a Patient, I want to register and create a personal profile, so that I can access healthcare services._  
-**Acceptance Criteria:**  
-1. Patient can register with valid email and password.  
-2. Profile includes personal and health information.  
-3. Patient receives confirmation email after registration.  
-**Priority:** High  
-**Story Points:** 3  
-**Notes:**  
-- Consider email verification for security.
+5. **As an Admin, I want to access reports on appointment statistics so that I can analyze clinic performance.**
 
-**Title:**  
-_As a Patient, I want to search for and find doctors by specialty or name, so that I can select an appropriate healthcare provider._  
-**Acceptance Criteria:**  
-1. Patient can enter search terms for specialty or doctor name.  
-2. Matching doctors are displayed with profiles and availability.  
-3. Search results are paginated or filtered by relevance.  
-**Priority:** High  
-**Story Points:** 5  
-**Notes:**  
-- Include filters for location, ratings, or availability if possible.
+---
 
-**Title:**  
-_As a Patient, I want to book, reschedule, and cancel appointments, so that I can manage my healthcare schedule conveniently._  
-**Acceptance Criteria:**  
-1. Patient can view doctor availability calendar for booking.  
-2. Patient can reschedule or cancel existing appointments easily.  
-3. Appointment status updates are reflected immediately.  
-**Priority:** High  
-**Story Points:** 8  
-**Notes:**  
-- Send notifications for appointment confirmations or changes.
+## 👨‍⚕️ Doctor User Stories
 
+1. **As a Doctor, I want to log in securely so that I can access my dashboard.**
+
+2. **As a Doctor, I want to set my availability so that patients can book appointments during those times.**
+
+3. **As a Doctor, I want to view my upcoming appointments so that I can prepare in advance.**
+
+4. **As a Doctor, I want to access a patient's medical history so that I can provide informed treatment.**
+
+5. **As a Doctor, I want to add or update prescriptions for a patient so that their treatment records are up to date.**
+
+---
+
+## 👩 Patient User Stories
+
+1. **As a Patient, I want to register and log in securely so that I can manage my appointments.**
+
+2. **As a Patient, I want to search for available doctors and book appointments based on availability.**
+
+3. **As a Patient, I want to view, reschedule, or cancel my appointments so that I have flexibility.**
+
+4. **As a Patient, I want to view my medical history and prescriptions so that I can track my treatment.**
+
+5. **As a Patient, I want to receive confirmation emails or notifications after booking or canceling appointments.**
+
+---
+
+## ✅ Notes
+
+- Each story is written in agile format: **As a [role], I want to [action], so that [benefit]**
+- These stories will be converted into GitHub Issues for tracking progress.
