@@ -72,5 +72,8 @@ graph TD
 
 
 
+
+
+
 Added architecture design for Smart Clinic app
 
