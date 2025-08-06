@@ -46,6 +46,24 @@ The Smart Clinic Management System follows a three-tier architecture consisting 
 
 
 
+## 📊 Architecture Flow Diagram
+
+```mermaid
+graph TD
+  A[User (Browser / API Client)] --> B[Controller Layer]
+  B --> C[Service Layer]
+  C --> D1[JPA Repository (MySQL)]
+  C --> D2[Mongo Repository (MongoDB)]
+  D1 --> E1[MySQL Database]
+  D2 --> E2[MongoDB Database]
+
+  B -.-> F[Thymeleaf Views]
+  B -.-> G[REST JSON Response]
+
+  style F fill:#E8F1F8,stroke:#666
+  style G fill:#FFF2CC,stroke:#666
+
+5. Scroll down, add a commit message like:
 
 
 
